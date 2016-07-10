@@ -7,14 +7,23 @@ namespace TDD_Day2_Homework
 {
     public class PotterShoppingCart
     {
+        private List<PotterBook> _potterBooks;
+
         public int checkout()
         {
-            throw new NotImplementedException();
+            return 100 * this._potterBooks.Count();
         }
 
         internal void AddPotterBooks(List<PotterBook> potterBooks)
         {
-            throw new NotImplementedException();
+            if (this._potterBooks == null)
+            {
+                this._potterBooks = potterBooks;
+            }
+            else
+            {
+                this._potterBooks.AddRange(potterBooks);
+            }
         }
     }
 }
