@@ -11,9 +11,23 @@ namespace TDD_Day2_Homework.Tests
     public class PotterShoppingCartTests
     {
         [TestMethod()]
-        public void checkoutTest()
+        public void Test_Checkout_Buy_1_Volume1_Checkout_should_be_100()
         {
-            Assert.Fail();
+            // arrange
+            var target = new PotterShoppingCart();
+            var potterBooks = new List<PotterBook>
+            {
+                new PotterBook() { Volume = 1 }
+            };
+            target.AddPotterBooks(potterBooks);
+
+            var expected = 100;
+
+            // act
+            var actual = target.checkout();
+
+            // assert
+            Assert.AreEqual(expected, actual);
         }
     }
 }
