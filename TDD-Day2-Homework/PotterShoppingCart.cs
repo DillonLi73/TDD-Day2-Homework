@@ -18,13 +18,13 @@ namespace TDD_Day2_Homework
             int amount = 0;
 
             // process 4 different volume case: 20% discount
-            amount += calculateAmountOfPromotion3(bookCountByVolume);
+            amount += calculateAmountOfPromotion(bookCountByVolume, 4, 0.20m);
 
             // process 3 different volume case: 10% discount
-            amount += calculateAmountOfPromotion2(bookCountByVolume);
+            amount += calculateAmountOfPromotion(bookCountByVolume, 3, 0.10m);
 
             // process 2 different volume case: 5% discount
-            amount += calculateAmountOfPromotion1(bookCountByVolume);
+            amount += calculateAmountOfPromotion(bookCountByVolume, 2, 0.05m);
 
             // process normal case: no discount
             amount += calculateAmountOfNormalCase(bookCountByVolume);
@@ -62,81 +62,26 @@ namespace TDD_Day2_Homework
             return amount;
         }
 
-        private static int calculateAmountOfPromotion1(Dictionary<int, int> bookCountByVolume)
+        private static int calculateAmountOfPromotion(Dictionary<int, int> bookCountByVolume, int differentBooksNum, decimal discount)
         {
             int amount = 0;
-            while (bookCountByVolume.Count >= 2)
+            while (bookCountByVolume.Count >= differentBooksNum)
             {
-                amount += (int)(100 * 2 * 0.95);
-
-                int bookMinusNum = 2;
+                amount += (int)(100 * differentBooksNum * (1 - discount));
+                
+                int bookMinusNum = differentBooksNum;
                 var volumes = bookCountByVolume.Keys.ToList();
                 foreach (var volume in volumes)
                 {
                     if (bookCountByVolume[volume] > 0)
                     {
                         bookCountByVolume[volume] -= 1;
+                        bookMinusNum -= 1;
+
                         if (bookCountByVolume[volume] == 0)
                         {
                             bookCountByVolume.Remove(volume);
                         }
-                        bookMinusNum -= 1;
-                    }
-
-                    if (bookMinusNum == 0) { break; }
-                }
-            }
-
-            return amount;
-        }
-
-        private static int calculateAmountOfPromotion2(Dictionary<int, int> bookCountByVolume)
-        {
-            int amount = 0;
-            while (bookCountByVolume.Count >= 3)
-            {
-                amount += (int)(100 * 3 * 0.90);
-
-                int bookMinusNum = 3;
-                var volumes = bookCountByVolume.Keys.ToList();
-                foreach (var volume in volumes)
-                {
-                    if (bookCountByVolume[volume] > 0)
-                    {
-                        bookCountByVolume[volume] -= 1;
-                        if (bookCountByVolume[volume] == 0)
-                        {
-                            bookCountByVolume.Remove(volume);
-                        }
-                        bookMinusNum -= 1;
-                    }
-
-                    if (bookMinusNum == 0) { break; }
-                }
-            }
-
-            return amount;
-        }
-
-        private static int calculateAmountOfPromotion3(Dictionary<int, int> bookCountByVolume)
-        {
-            int amount = 0;
-            while (bookCountByVolume.Count >= 4)
-            {
-                amount += (int)(100 * 4 * 0.80);
-
-                int bookMinusNum = 4;
-                var volumes = bookCountByVolume.Keys.ToList();
-                foreach (var volume in volumes)
-                {
-                    if (bookCountByVolume[volume] > 0)
-                    {
-                        bookCountByVolume[volume] -= 1;
-                        if (bookCountByVolume[volume] == 0)
-                        {
-                            bookCountByVolume.Remove(volume);
-                        }
-                        bookMinusNum -= 1;
                     }
 
                     if (bookMinusNum == 0) { break; }
