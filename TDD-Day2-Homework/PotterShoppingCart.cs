@@ -11,10 +11,22 @@ namespace TDD_Day2_Homework
 
         public int checkout()
         {
-            if ( this._potterBooks == null || this._potterBooks.Count() == 0 ) { return 0; }
+            if (this._potterBooks == null || this._potterBooks.Count() == 0) { return 0; }
+
+            Dictionary<int, int> bookCountByVolume = getBookCountByVolume();
 
             int amount = 0;
+            // process 2 different volume case: 5% discount
+            amount += calculateAmountOfPromotion1(bookCountByVolume);
 
+            // process normal case: no discount
+            amount += calculateAmountOfNormalCase(bookCountByVolume);
+
+            return amount;
+        }
+
+        private Dictionary<int, int> getBookCountByVolume()
+        {
             var countByVolume = new Dictionary<int, int>();
             foreach (var potterBook in this._potterBooks)
             {
@@ -28,35 +40,44 @@ namespace TDD_Day2_Homework
                 }
             }
 
-            // process 2 different volume case: 5% discount
-            List<int> volumes = null;
-            while (countByVolume.Count >= 2)
+            return countByVolume;
+        }
+
+        private static int calculateAmountOfNormalCase(Dictionary<int, int> countByVolume)
+        {
+            int amount = 0;
+            var volumes = countByVolume.Keys.ToList();
+            foreach (var volume in volumes)
+            {
+                amount += 100 * countByVolume[volume];
+            }
+
+            return amount;
+        }
+
+        private static int calculateAmountOfPromotion1(Dictionary<int, int> bookCountByVolume)
+        {
+            int amount = 0;
+            while (bookCountByVolume.Count >= 2)
             {
                 amount += (int)(100 * 2 * 0.95);
 
                 int bookMinusNum = 2;
-                volumes = countByVolume.Keys.ToList();
+                var volumes = bookCountByVolume.Keys.ToList();
                 foreach (var volume in volumes)
                 {
-                    if (countByVolume[volume] > 0)
+                    if (bookCountByVolume[volume] > 0)
                     {
-                        countByVolume[volume] -= 1;
-                        if (countByVolume[volume] == 0)
+                        bookCountByVolume[volume] -= 1;
+                        if (bookCountByVolume[volume] == 0)
                         {
-                            countByVolume.Remove(volume);
+                            bookCountByVolume.Remove(volume);
                         }
                         bookMinusNum -= 1;
                     }
 
                     if (bookMinusNum == 0) { break; }
-                }   
-            }
-
-            // process normal case: no discount
-            volumes = countByVolume.Keys.ToList();
-            foreach (var volume in volumes)
-            {
-                amount += 100 * countByVolume[volume];
+                }
             }
 
             return amount;
