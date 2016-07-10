@@ -17,6 +17,9 @@ namespace TDD_Day2_Homework
 
             int amount = 0;
 
+            // process 5 different volume case: 25% discount
+            amount += calculateAmountOfPromotion(bookCountByVolume, 5, 0.25m);
+
             // process 4 different volume case: 20% discount
             amount += calculateAmountOfPromotion(bookCountByVolume, 4, 0.20m);
 
