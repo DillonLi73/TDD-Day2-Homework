@@ -11,5 +11,10 @@ namespace TDD_Day2_Homework
         {
             throw new NotImplementedException();
         }
+
+        internal void AddPotterBooks(List<PotterBook> potterBooks)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
