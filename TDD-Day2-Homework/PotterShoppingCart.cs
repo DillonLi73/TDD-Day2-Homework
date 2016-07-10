@@ -16,6 +16,10 @@ namespace TDD_Day2_Homework
             Dictionary<int, int> bookCountByVolume = getBookCountByVolume();
 
             int amount = 0;
+
+            // process 4 different volume case: 20% discount
+            amount += calculateAmountOfPromotion3(bookCountByVolume);
+
             // process 3 different volume case: 10% discount
             amount += calculateAmountOfPromotion2(bookCountByVolume);
 
@@ -94,6 +98,34 @@ namespace TDD_Day2_Homework
                 amount += (int)(100 * 3 * 0.90);
 
                 int bookMinusNum = 3;
+                var volumes = bookCountByVolume.Keys.ToList();
+                foreach (var volume in volumes)
+                {
+                    if (bookCountByVolume[volume] > 0)
+                    {
+                        bookCountByVolume[volume] -= 1;
+                        if (bookCountByVolume[volume] == 0)
+                        {
+                            bookCountByVolume.Remove(volume);
+                        }
+                        bookMinusNum -= 1;
+                    }
+
+                    if (bookMinusNum == 0) { break; }
+                }
+            }
+
+            return amount;
+        }
+
+        private static int calculateAmountOfPromotion3(Dictionary<int, int> bookCountByVolume)
+        {
+            int amount = 0;
+            while (bookCountByVolume.Count >= 4)
+            {
+                amount += (int)(100 * 4 * 0.80);
+
+                int bookMinusNum = 4;
                 var volumes = bookCountByVolume.Keys.ToList();
                 foreach (var volume in volumes)
                 {
