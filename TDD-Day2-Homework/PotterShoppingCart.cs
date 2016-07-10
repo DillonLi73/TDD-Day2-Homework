@@ -8,6 +8,12 @@ namespace TDD_Day2_Homework
     public class PotterShoppingCart
     {
         private List<PotterBook> _potterBooks;
+        private List<Promotion> _promotions = new List<Promotion> {
+            new Promotion() { DifferentVolumesNum = 2, Discount = 0.05m },
+            new Promotion() { DifferentVolumesNum = 3, Discount = 0.10m },
+            new Promotion() { DifferentVolumesNum = 4, Discount = 0.20m },
+            new Promotion() { DifferentVolumesNum = 5, Discount = 0.25m }
+        };
 
         public int checkout()
         {
@@ -15,22 +21,16 @@ namespace TDD_Day2_Homework
 
             Dictionary<int, int> bookCountByVolume = getBookCountByVolume();
 
+            var sortedPromotions = this._promotions;
+            sortedPromotions.Sort((x, y) => { return -x.Discount.CompareTo(y.Discount); });
+
             int amount = 0;
+            foreach (var promotion in sortedPromotions)
+            {
+                amount += promotion.CalculateAmount(bookCountByVolume, PotterBook.PRICE);
+            }
 
-            // process 5 different volume case: 25% discount
-            amount += calculateAmountOfPromotion(bookCountByVolume, 5, 0.25m);
-
-            // process 4 different volume case: 20% discount
-            amount += calculateAmountOfPromotion(bookCountByVolume, 4, 0.20m);
-
-            // process 3 different volume case: 10% discount
-            amount += calculateAmountOfPromotion(bookCountByVolume, 3, 0.10m);
-
-            // process 2 different volume case: 5% discount
-            amount += calculateAmountOfPromotion(bookCountByVolume, 2, 0.05m);
-
-            // process normal case: no discount
-            amount += calculateAmountOfNormalCase(bookCountByVolume);
+            amount += calculateAmount(bookCountByVolume, PotterBook.PRICE);
 
             return amount;
         }
@@ -53,42 +53,13 @@ namespace TDD_Day2_Homework
             return countByVolume;
         }
 
-        private static int calculateAmountOfNormalCase(Dictionary<int, int> countByVolume)
+        private static int calculateAmount(Dictionary<int, int> countByVolume, decimal unitPrice)
         {
             int amount = 0;
             var volumes = countByVolume.Keys.ToList();
             foreach (var volume in volumes)
             {
-                amount += 100 * countByVolume[volume];
-            }
-
-            return amount;
-        }
-
-        private static int calculateAmountOfPromotion(Dictionary<int, int> bookCountByVolume, int differentBooksNum, decimal discount)
-        {
-            int amount = 0;
-            while (bookCountByVolume.Count >= differentBooksNum)
-            {
-                amount += (int)(100 * differentBooksNum * (1 - discount));
-                
-                int bookMinusNum = differentBooksNum;
-                var volumes = bookCountByVolume.Keys.ToList();
-                foreach (var volume in volumes)
-                {
-                    if (bookCountByVolume[volume] > 0)
-                    {
-                        bookCountByVolume[volume] -= 1;
-                        bookMinusNum -= 1;
-
-                        if (bookCountByVolume[volume] == 0)
-                        {
-                            bookCountByVolume.Remove(volume);
-                        }
-                    }
-
-                    if (bookMinusNum == 0) { break; }
-                }
+                amount += (int)(unitPrice * countByVolume[volume]);
             }
 
             return amount;

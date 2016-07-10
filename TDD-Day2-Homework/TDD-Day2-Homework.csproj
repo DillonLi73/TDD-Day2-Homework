@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="PotterBook.cs" />
     <Compile Include="PotterShoppingCart.cs" />
+    <Compile Include="Promotion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
