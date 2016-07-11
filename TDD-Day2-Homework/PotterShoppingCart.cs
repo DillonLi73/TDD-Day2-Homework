@@ -20,23 +20,27 @@ namespace TDD_Day2_Homework
         {
             if (this._potterBooks == null || this._potterBooks.Count() == 0) { return 0; }
 
+            List<IBookCalculator> calculators = GetBookCalculators();
             Dictionary<int, int> bookCountByVolume = getBookCountByVolume();
 
-            var sortedPromotions = this._promotions;
-            sortedPromotions.Sort((x, y) => { return -x.Discount.CompareTo(y.Discount); });
-
             int amount = 0;
-
-            var calculators = new List<IBookCalculator>();
-            calculators.AddRange(sortedPromotions);
-            calculators.Add(this._potterBookCalculator);
-
             foreach (var calculator in calculators)
             {
                 amount += calculator.CalculateAmount(bookCountByVolume, PotterBook.PRICE);
             }
 
             return amount;
+        }
+
+        private List<IBookCalculator> GetBookCalculators()
+        {
+            var sortedPromotions = this._promotions;
+            sortedPromotions.Sort((x, y) => { return -x.Discount.CompareTo(y.Discount); });
+
+            var calculators = new List<IBookCalculator>();
+            calculators.AddRange(sortedPromotions);
+            calculators.Add(this._potterBookCalculator);
+            return calculators;
         }
 
         private Dictionary<int, int> getBookCountByVolume()
