@@ -2,8 +2,8 @@
 
 namespace TDD_Day2_Homework
 {
-    internal interface IBookCalculator
+    internal interface IAmountCalculator
     {
-        int CalculateAmount(Dictionary<int, int> bookCountByVolume, decimal unitPrice);
+        decimal Calculate(Dictionary<int, int> bookCountByVolume, decimal unitPrice);
     }
 }

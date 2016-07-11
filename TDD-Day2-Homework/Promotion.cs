@@ -4,38 +4,38 @@ using System.Linq;
 
 namespace TDD_Day2_Homework
 {
-    internal class Promotion : IBookCalculator
+    internal class Promotion : IAmountCalculator
     {
         public int DifferentVolumesNum { get; internal set; }
         public decimal Discount { get; internal set; }
 
-        public int CalculateAmount(Dictionary<int, int> bookCountByVolume, decimal unitPrice)
+        public decimal Calculate(Dictionary<int, int> bookCountByVolume, decimal unitPrice)
         {
-            int amount = 0;
+            decimal amount = 0m;
             while (bookCountByVolume.Count >= DifferentVolumesNum)
             {
-                amount += (int)(unitPrice * DifferentVolumesNum * (1 - Discount));
+                amount += unitPrice * DifferentVolumesNum * (1 - Discount);
 
-                int bookMinusNum = DifferentVolumesNum;
-                var volumes = bookCountByVolume.Keys.ToList();
-                foreach (var volume in volumes)
-                {
-                    if (bookCountByVolume[volume] > 0)
-                    {
-                        bookCountByVolume[volume] -= 1;
-                        bookMinusNum -= 1;
-
-                        if (bookCountByVolume[volume] == 0)
-                        {
-                            bookCountByVolume.Remove(volume);
-                        }
-                    }
-
-                    if (bookMinusNum == 0) { break; }
-                }
+                this.minusBookFromDifferentVolume(bookCountByVolume, DifferentVolumesNum);
             }
 
             return amount;
+        }
+
+        private void minusBookFromDifferentVolume(Dictionary<int, int> bookCountByVolume, int minusNum)
+        {
+            var volumes = bookCountByVolume.Keys.ToList();
+            foreach (var volume in volumes)
+            {
+                bookCountByVolume[volume] -= 1;
+                if (bookCountByVolume[volume] == 0)
+                {
+                    bookCountByVolume.Remove(volume);
+                }
+
+                minusNum -= 1;
+                if (minusNum == 0) { break; }
+            }
         }
     }
 }

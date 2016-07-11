@@ -4,18 +4,11 @@ using System.Linq;
 
 namespace TDD_Day2_Homework
 {
-    internal class PotterBookCalculator : IBookCalculator
+    internal class PotterBookCalculator : IAmountCalculator
     {
-        public int CalculateAmount(Dictionary<int, int> bookCountByVolume, decimal unitPrice)
+        public decimal Calculate(Dictionary<int, int> bookCountByVolume, decimal unitPrice)
         {
-            int amount = 0;
-            var volumes = bookCountByVolume.Keys.ToList();
-            foreach (var volume in volumes)
-            {
-                amount += (int)(unitPrice * bookCountByVolume[volume]);
-            }
-
-            return amount;
+            return bookCountByVolume.Sum(x => x.Value * unitPrice);
         }
     }
 }
