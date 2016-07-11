@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace TDD_Day2_Homework
 {
-    internal class Promotion
+    internal class Promotion : IBookCalculator
     {
         public int DifferentVolumesNum { get; internal set; }
         public decimal Discount { get; internal set; }
 
-        internal int CalculateAmount(Dictionary<int, int> bookCountByVolume, decimal unitPrice)
+        public int CalculateAmount(Dictionary<int, int> bookCountByVolume, decimal unitPrice)
         {
             int amount = 0;
             while (bookCountByVolume.Count >= DifferentVolumesNum)

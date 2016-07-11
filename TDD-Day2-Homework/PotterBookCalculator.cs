@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace TDD_Day2_Homework
 {
-    internal class PotterBookCalculator
+    internal class PotterBookCalculator : IBookCalculator
     {
-        internal int calculateAmount(Dictionary<int, int> bookCountByVolume, decimal unitPrice)
+        public int CalculateAmount(Dictionary<int, int> bookCountByVolume, decimal unitPrice)
         {
             int amount = 0;
             var volumes = bookCountByVolume.Keys.ToList();

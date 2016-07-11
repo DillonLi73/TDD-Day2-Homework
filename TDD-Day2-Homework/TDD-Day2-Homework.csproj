@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBookCalculator.cs" />
     <Compile Include="PotterBook.cs" />
     <Compile Include="PotterBookCalculator.cs" />
     <Compile Include="PotterShoppingCart.cs" />

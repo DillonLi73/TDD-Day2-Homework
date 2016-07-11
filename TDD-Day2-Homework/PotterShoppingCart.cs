@@ -26,12 +26,15 @@ namespace TDD_Day2_Homework
             sortedPromotions.Sort((x, y) => { return -x.Discount.CompareTo(y.Discount); });
 
             int amount = 0;
-            foreach (var promotion in sortedPromotions)
-            {
-                amount += promotion.CalculateAmount(bookCountByVolume, PotterBook.PRICE);
-            }
 
-            amount += this._potterBookCalculator.calculateAmount(bookCountByVolume, PotterBook.PRICE);
+            var calculators = new List<IBookCalculator>();
+            calculators.AddRange(sortedPromotions);
+            calculators.Add(this._potterBookCalculator);
+
+            foreach (var calculator in calculators)
+            {
+                amount += calculator.CalculateAmount(bookCountByVolume, PotterBook.PRICE);
+            }
 
             return amount;
         }
