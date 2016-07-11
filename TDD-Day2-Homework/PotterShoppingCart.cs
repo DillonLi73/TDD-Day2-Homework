@@ -14,6 +14,7 @@ namespace TDD_Day2_Homework
             new Promotion() { DifferentVolumesNum = 4, Discount = 0.20m },
             new Promotion() { DifferentVolumesNum = 5, Discount = 0.25m }
         };
+        private PotterBookCalculator _potterBookCalculator = new PotterBookCalculator();
 
         public int checkout()
         {
@@ -30,7 +31,7 @@ namespace TDD_Day2_Homework
                 amount += promotion.CalculateAmount(bookCountByVolume, PotterBook.PRICE);
             }
 
-            amount += calculateAmount(bookCountByVolume, PotterBook.PRICE);
+            amount += this._potterBookCalculator.calculateAmount(bookCountByVolume, PotterBook.PRICE);
 
             return amount;
         }
@@ -51,18 +52,6 @@ namespace TDD_Day2_Homework
             }
 
             return countByVolume;
-        }
-
-        private static int calculateAmount(Dictionary<int, int> countByVolume, decimal unitPrice)
-        {
-            int amount = 0;
-            var volumes = countByVolume.Keys.ToList();
-            foreach (var volume in volumes)
-            {
-                amount += (int)(unitPrice * countByVolume[volume]);
-            }
-
-            return amount;
         }
 
         internal void AddPotterBooks(List<PotterBook> potterBooks)

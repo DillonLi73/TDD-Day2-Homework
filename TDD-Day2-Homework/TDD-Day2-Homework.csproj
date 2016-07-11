@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PotterBook.cs" />
+    <Compile Include="PotterBookCalculator.cs" />
     <Compile Include="PotterShoppingCart.cs" />
     <Compile Include="Promotion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
