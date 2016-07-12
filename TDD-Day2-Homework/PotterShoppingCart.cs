@@ -8,33 +8,19 @@ namespace TDD_Day2_Homework
     public class PotterShoppingCart
     {
         private List<PotterBook> _potterBooks;
+        private Dictionary<int, decimal> _discounts = new Dictionary<int, decimal>()
+        {
+            { 1, 0 },
+            { 2, 0.05m },
+            { 3, 0.10m },
+            { 4, 0.20m },
+            { 5, 0.25m }
+        };
 
         public int checkout()
         {
-            decimal discount = GetDiscount();
+            decimal discount = this._discounts[this._potterBooks.Count];
             return (int)(_potterBooks.Count * 100 * (1 - discount));
-        }
-
-        private decimal GetDiscount()
-        {
-            decimal discount = 0;
-            switch (_potterBooks.Count)
-            {
-                case 2:
-                    discount = 0.05m;
-                    break;
-                case 3:
-                    discount = 0.1m;
-                    break;
-                case 4:
-                    discount = 0.2m;
-                    break;
-                case 5:
-                    discount = 0.25m;
-                    break;
-            }
-
-            return discount;
         }
 
         internal void AddPotterBooks(List<PotterBook> potterBooks)
