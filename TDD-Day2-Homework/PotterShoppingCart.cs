@@ -11,7 +11,7 @@ namespace TDD_Day2_Homework
 
         public int checkout()
         {
-            return _potterBooks.Count() * 100;
+            return (_potterBooks.Count == 2) ? (int)(_potterBooks.Count * 100 * 0.95) : _potterBooks.Count * 100;
         }
 
         internal void AddPotterBooks(List<PotterBook> potterBooks)
