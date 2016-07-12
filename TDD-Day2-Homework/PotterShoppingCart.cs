@@ -11,6 +11,12 @@ namespace TDD_Day2_Homework
 
         public int checkout()
         {
+            decimal discount = GetDiscount();
+            return (int)(_potterBooks.Count * 100 * (1 - discount));
+        }
+
+        private decimal GetDiscount()
+        {
             decimal discount = 0;
             switch (_potterBooks.Count)
             {
@@ -21,7 +27,8 @@ namespace TDD_Day2_Homework
                     discount = 0.1m;
                     break;
             }
-            return (int)(_potterBooks.Count * 100 * (1 -discount));
+
+            return discount;
         }
 
         internal void AddPotterBooks(List<PotterBook> potterBooks)
