@@ -11,15 +11,17 @@ namespace TDD_Day2_Homework
 
         public int checkout()
         {
+            decimal discount = 0;
             switch (_potterBooks.Count)
             {
                 case 2:
-                    return (int)(_potterBooks.Count * 100 * 0.95);
+                    discount = 0.05m;
+                    break;
                 case 3:
-                    return (int)(_potterBooks.Count * 100 * 0.9);
-                default:
-                    return _potterBooks.Count * 100;
+                    discount = 0.1m;
+                    break;
             }
+            return (int)(_potterBooks.Count * 100 * (1 -discount));
         }
 
         internal void AddPotterBooks(List<PotterBook> potterBooks)
