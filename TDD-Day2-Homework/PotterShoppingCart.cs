@@ -25,31 +25,40 @@ namespace TDD_Day2_Homework
             
             while (true)
             {
-                // 取得目前不同集數的最大值
-                var differentBooksNum = 0;
-                foreach (var booksOfVolume in booksByVolume)
-                {
-                    if (booksOfVolume.Skip(skipBookNum).Count() > 0)
-                    {
-                        differentBooksNum++;
-                    }
-                }
-
-                if (differentBooksNum <= 0)
+                int differentVolumesNum = GetDifferentVolumesNum(booksByVolume, skipBookNum);
+                if (differentVolumesNum <= 0)
                 {
                     // 沒有書了，離開迴圈
                     break;
                 }
                 else
                 {
-                    // 依據最大值取得對應折數、計算價格
-                    decimal discount = this._discounts[differentBooksNum];
-                    amount += (int)(differentBooksNum * 100 * (1 - discount));
+                    amount += CalculateAmount(differentVolumesNum);
                     skipBookNum++;
                 }
             }
 
             return amount;
+        }
+
+        private int CalculateAmount(int differentVolumesNum)
+        {
+            decimal discount = this._discounts[differentVolumesNum];
+            return (int)(differentVolumesNum * 100 * (1 - discount));
+        }
+
+        private static int GetDifferentVolumesNum(IEnumerable<IGrouping<int, PotterBook>> booksByVolume, int skipBookNum)
+        {
+            var differentVolumesNum = 0;
+            foreach (var booksOfVolume in booksByVolume)
+            {
+                if (booksOfVolume.Skip(skipBookNum).Count() > 0)
+                {
+                    differentVolumesNum++;
+                }
+            }
+
+            return differentVolumesNum;
         }
 
         internal void AddPotterBooks(List<PotterBook> potterBooks)
