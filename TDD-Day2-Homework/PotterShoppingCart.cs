@@ -26,15 +26,15 @@ namespace TDD_Day2_Homework
             while (true)
             {
                 int differentVolumesNum = GetDifferentVolumesNum(booksByVolume, skipBookNum);
-                if (differentVolumesNum <= 0)
-                {
-                    // 沒有書了，離開迴圈
-                    break;
-                }
-                else
+                if (differentVolumesNum > 0)
                 {
                     amount += CalculateAmount(differentVolumesNum);
                     skipBookNum++;
+                }
+                else
+                {
+                    // 沒有書了，離開迴圈
+                    break;
                 }
             }
 
