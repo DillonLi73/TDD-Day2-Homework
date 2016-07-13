@@ -119,5 +119,28 @@ namespace TDD_Day2_Homework.Tests
             // assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void Test_Checkout_Buy_1_Volume1_And_1_Volume2_And_2_Volume3_Checkout_should_be_370()
+        {
+            // arrange
+            var target = new PotterShoppingCart();
+            var potterBooks = new List<PotterBook>
+            {
+                new PotterBook() { Volume = 1 },
+                new PotterBook() { Volume = 2 },
+                new PotterBook() { Volume = 3 },
+                new PotterBook() { Volume = 3 }
+            };
+            target.AddPotterBooks(potterBooks);
+
+            var expected = 370;
+
+            // act
+            var actual = target.checkout();
+
+            // assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
